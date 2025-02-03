@@ -1,7 +1,22 @@
-const express = require('express')
+const express = require('express');
+const routes = require('./routes');
+const db = require('./config/db');
+const User = require('./models/User');
+const Rol = require('./models/Rol');
+const Empleado = require('./models/Empleado');
+const Solicitud = require('./models/Solicitud');
 
 //Creacion del servidor
 const app = express();
+
+app.use(express.json());
+
+db.sync()
+    .then(()=> console.log("Base de datos sincronizada"))
+    .catch(err=> console.error("Error al sincronizar BD: ", err))
+
+//Rutas de la app
+app.use('/', routes());
 
 //Puerto
 const port = 5000
