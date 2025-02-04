@@ -36,4 +36,4 @@ const Solicitud = sequelize.define("solicitud", {
 Empleado.hasMany(Solicitud, {foreignKey: "ID_EMPLEADO"});
 Solicitud.belongsTo(Empleado, {foreignKey: "ID_EMPLEADO"});
 
-module.exports = Empleado;
+module.exports = Solicitud;

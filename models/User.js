@@ -1,6 +1,7 @@
 const {DataTypes} = require('sequelize')
 const sequelize = require('../config/db');
 const Rol = require('./Rol');
+const Empleado = require('./Empleado');
 
 const User = sequelize.define("User", {
     ID: {
@@ -16,8 +17,12 @@ const User = sequelize.define("User", {
         },
         allowNull:false
     },
-    NOMBRE:{
-        type: DataTypes.STRING,
+    EMPLEADO_ID:{
+        type: DataTypes.INTEGER,
+        references:{
+            model: Empleado,
+            key: "ID",
+        },
         allowNull:false
     },
     EMAIL:{
@@ -34,8 +39,10 @@ const User = sequelize.define("User", {
     tableName: "usuario"
 });
 
+Empleado.hasOne(User, {foreignKey: "EMPLEADO_ID"});
+User.belongsTo(Empleado, {foreignKey: "EMPLEADO_ID"})
 Rol.hasMany(User, {foreignKey: "ROL_ID"});
-User.belongsTo(Rol, {foreignKey: "ROL_ID"})
+User.belongsTo(Rol, {foreignKey: "ROL_ID"});
 
 module.exports = User;
 

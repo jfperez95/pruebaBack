@@ -8,7 +8,7 @@ const Empleado = sequelize.define("empleado", {
         primaryKey:true
     },
     FECHA_INGRESO: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull:false
     },
     NOMBRE:{
