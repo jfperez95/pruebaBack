@@ -15,6 +15,9 @@ const importarDatos = async () =>{
         //Autenticar
         await db.authenticate()
 
+        //Generar las Columnas
+        await db.sync()
+
         //Se insertan datos
         await Promise.all([
             Rol.bulkCreate(rol),

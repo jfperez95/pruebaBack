@@ -1,5 +1,6 @@
 const { where } = require('sequelize');
 const Solicitud = require('../models/Solicitud');
+const Empleado = require('../models/Empleado');
 
 //Nueva solicitud
 exports.nuevoEmpleado = async (req, res, next) =>{
@@ -17,8 +18,23 @@ exports.nuevoEmpleado = async (req, res, next) =>{
 //Mostrar todas las solicitudes
 exports.mostrarSolicitudes = async (req, res, next) =>{
     try {
-        const solicitudes = await Solicitud.findAll({});
-        res.json(solicitudes)
+        let { page, limit } = req.query;
+        page = parseInt(page) || 1;
+        limit = parseInt(limit) || 10;
+        const offset = (page - 1) * limit;
+        const solicitudes = await Solicitud.findAll({
+            include:[{model: Empleado}],
+            raw: true,
+            nest:true
+        });
+        const datosEnviar = solicitudes.map((solicitud) => ({
+            ID: solicitud.ID,
+            DESCRIPCION: solicitud.DESCRIPCION,
+            RESUMEN: solicitud.RESUMEN,
+            NOMBRE: solicitud.empleado.NOMBRE,
+            CODIGO: solicitud.CODIGO
+          }))
+        res.json(datosEnviar)
     } catch (error) {
         console.log(error)
         next()

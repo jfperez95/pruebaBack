@@ -1,9 +1,9 @@
 const rol = [
     {
-        NOMBRE: 'Empleado'
+        NOMBRE: 'Administrador'
     },
     {
-        NOMBRE: 'Administrador'
+        NOMBRE: 'Empleado'
     }
 ]
 
